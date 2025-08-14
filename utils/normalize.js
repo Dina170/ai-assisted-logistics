@@ -46,4 +46,5 @@ module.exports = {
   convertZonestoMap,
   normalizeZone,
   normalizeOrders,
+  formatDate,
 };

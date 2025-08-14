@@ -6,19 +6,25 @@ function planCourier(orders, couriers) {
   const assignments = [];
   const unassigned = [];
 
+  orders.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+
   orders.forEach((order) => {
     const matchedCouriers = couriers.filter((courier) => {
-      const coversZone =
-        courier.zonesCovered.includes(order.city) ||
-        courier.zonesCovered.includes(order.zoneHint);
-      const acceptPayment =
-        order.paymentType === "COD" ? courier.acceptsCOD : true;
-      const notExcluded = !courier.exclusions.includes(order.productType);
-      const totalWeight = capacityUsage.find(
-        (c) => c.courierId === courier.courierId
-      ).totalWeight;
-      const hasCapacity = courier.dailyCapacity - totalWeight >= order.weight;
-      return coversZone && acceptPayment && notExcluded && hasCapacity;
+      if (courier.courierId == "Weevo") {
+        const coversZone =
+          courier.zonesCovered.includes(order.city) ||
+          courier.zonesCovered.includes(order.zoneHint);
+
+        const acceptPayment =
+          order.paymentType === "COD" ? courier.acceptsCOD : true;
+        const notExcluded = !courier.exclusions.includes(order.productType);
+        const totalWeight = capacityUsage.find(
+          (c) => c.courierId === courier.courierId
+        ).totalWeight;
+        const hasCapacity = courier.dailyCapacity - totalWeight >= order.weight;
+
+        return coversZone && acceptPayment && notExcluded && hasCapacity;
+      }
     });
     if (matchedCouriers.length === 0) {
       unassigned.push({
@@ -29,9 +35,7 @@ function planCourier(orders, couriers) {
     }
 
     matchedCouriers.sort((c1, c2) => {
-      if (c1.priority !== c2.priority) return c1 - c2;
-      if (c1.deadline && c2.deadline)
-        return new Date(c1.deadline) - new Date(c2.deadline);
+      if (c1.priority !== c2.priority) return c1.priority - c2.priority;
       const c1Weight = capacityUsage.find(
         (c) => c.courierId === c1.courierId
       ).totalWeight;
