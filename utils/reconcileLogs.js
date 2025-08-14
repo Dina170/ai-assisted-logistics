@@ -21,11 +21,13 @@ function reconcileLogs(orders, plan, logs, couriers) {
     }
   });
 
+  const seenOrdersIds = [];
   logOrdersIds.forEach((orderId) => {
-    const seenOrdersIds = [];
-
-    if (seenOrdersIds.includes(orderId)) reconciliation.duplicate.push(orderId);
-    else seenOrdersIds.push(orderId);
+    if (seenOrdersIds.includes(orderId)) {
+      reconciliation.duplicate.push(orderId);
+      return;
+    }
+    seenOrdersIds.push(orderId);
 
     if (!ordersIds.includes(orderId)) {
       reconciliation.unexpected.push(orderId);
