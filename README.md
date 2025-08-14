@@ -19,29 +19,24 @@ This project processes messy order data, plans courier assignments under given c
 - [leven](https://www.npmjs.com/package/leven) — for address similarity
 - [fs/promises](https://nodejs.org/api/fs.html) — for reading/writing JSON files
 
-Install all dependencies:
-
-````bash
-npm install
-
 ## 🚀 How to Run
 
 1. **Clone this repository**:
 
 ```bash
-git clone <YOUR_REPO_URL>
-cd <YOUR_REPO_NAME>
+git clone https://github.com/Dina170/ai-assisted-logistics.git
+cd ai-assisted-logistics
 
-````
+```
 
-1. **Install dependencies**:
+2. **Install dependencies**:
 
 ```bash
 npm install
 
 ```
 
-1. **Prepare the data**
+3. **Prepare the data**
 
    Place your input files in the `data/` directory:
 
@@ -50,14 +45,14 @@ npm install
    - `zones.csv`
    - `log.csv`
 
-2. **Run the processing script**:
+4. **Run the processing script**:
 
 ```bash
 node index.js
 
 ```
 
-1. **Check the output**
+5. **Check the output**
 
    The following files will be generated in the `output/` directory:
 
