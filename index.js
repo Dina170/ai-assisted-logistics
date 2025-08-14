@@ -32,11 +32,9 @@ async function loadFiles() {
   const zonesMap = convertZonestoMap(zones);
   const normalizedOrders = normalizeOrders(orders, zonesMap);
   const { mergedOrders } = mergeOrders(normalizedOrders);
-  // await writeJsonFile("./output/clean_orders.json", mergedOrders);
+  await writeJsonFile("./output/clean_orders.json", mergedOrders);
   const plan = planCourier(mergedOrders, couriers);
-  // await writeJsonFile("./output/plan.json", plan);
+  await writeJsonFile("./output/plan.json", plan);
   const reconciliation = reconcileLogs(mergedOrders, plan, logs, couriers);
   await writeJsonFile("./output/reconciliation.json", reconciliation);
-
-  // console.log(mergedOrders);
 })();
