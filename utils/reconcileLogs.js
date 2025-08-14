@@ -1,3 +1,5 @@
+const { formatDate } = require("./normalize");
+
 function reconcileLogs(orders, plan, logs, couriers) {
   const reconciliation = {
     missing: [],
@@ -34,8 +36,11 @@ function reconcileLogs(orders, plan, logs, couriers) {
 
     const order = orders.find((o) => o.orderId === orderId);
 
-    if (new Date(log.deliveredAt) > new Date(order.deadline))
+    const deliveredAt = formatDate(log.deliveredAt);
+
+    if (new Date(deliveredAt) > new Date(order.deadline)) {
       reconciliation.late.push(orderId);
+    }
 
     const planned = plan.assignments.find((p) => orderId === p.orderId);
 
