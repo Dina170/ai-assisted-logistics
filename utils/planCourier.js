@@ -10,21 +10,19 @@ function planCourier(orders, couriers) {
 
   orders.forEach((order) => {
     const matchedCouriers = couriers.filter((courier) => {
-      if (courier.courierId == "Weevo") {
-        const coversZone =
-          courier.zonesCovered.includes(order.city) ||
-          courier.zonesCovered.includes(order.zoneHint);
+      const coversZone =
+        courier.zonesCovered.includes(order.city) ||
+        courier.zonesCovered.includes(order.zoneHint);
 
-        const acceptPayment =
-          order.paymentType === "COD" ? courier.acceptsCOD : true;
-        const notExcluded = !courier.exclusions.includes(order.productType);
-        const totalWeight = capacityUsage.find(
-          (c) => c.courierId === courier.courierId
-        ).totalWeight;
-        const hasCapacity = courier.dailyCapacity - totalWeight >= order.weight;
+      const acceptPayment =
+        order.paymentType === "COD" ? courier.acceptsCOD : true;
+      const notExcluded = !courier.exclusions.includes(order.productType);
+      const totalWeight = capacityUsage.find(
+        (c) => c.courierId === courier.courierId
+      ).totalWeight;
+      const hasCapacity = courier.dailyCapacity - totalWeight >= order.weight;
 
-        return coversZone && acceptPayment && notExcluded && hasCapacity;
-      }
+      return coversZone && acceptPayment && notExcluded && hasCapacity;
     });
     if (matchedCouriers.length === 0) {
       unassigned.push({
